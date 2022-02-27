@@ -56,7 +56,7 @@ loop :: String -> [Char] -> Int -> IO ()
 loop _ allowed_chars 0 = do
     putStrLn $ prompt Lose
 loop word allowed_chars n = do
-    putStrLn "Enter a guess of five letter word: allowed characters: ">> putStrLn allowed_chars
+    putStrLn "Enter a guess of five letter word: allowed characters: "
     inp <- getGuess 5 allowed_chars
     let char_status = checkGuess inp word
     --putStrLn $ show char_status
