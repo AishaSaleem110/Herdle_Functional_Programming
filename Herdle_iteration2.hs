@@ -27,7 +27,7 @@ checkGuessAux :: [(Char, Status)] -> String -> String -> String ->[(Char, Status
 checkGuessAux acc [] _ _ = acc
 checkGuessAux acc _ [] _ = acc 
 checkGuessAux acc (x:xs) (y:ys) aux | x==y = checkGuessAux (acc ++ [(x,Here)]) xs ys aux
-                                    | x `elem` aux = checkGuessAux (acc ++ [(x,Elsewhere Nothing)]) xs ys aux
+                                    | x `member` aux = checkGuessAux (acc ++ [(x,Elsewhere Nothing)]) xs ys aux
                                     | otherwise = checkGuessAux (acc ++ [(x,Nowhere)]) xs ys aux
 
 getGuess :: Integer -> [Char]-> IO String
@@ -37,7 +37,7 @@ getGuess 0 allowed_chars  = do
 getGuess n allowed_chars= do
     inp <-  getChar'
     let inp' = toLower inp
-    if inp' `elem` allowed_chars then
+    if inp' `member` allowed_chars then
 
         (do putChar ' '
             xs <- getGuess (n - 1) allowed_chars
@@ -56,7 +56,8 @@ loop :: String -> [Char] -> Int -> IO ()
 loop _ allowed_chars 0 = do
     putStrLn $ prompt Lose
 loop word allowed_chars n = do
-    putStrLn "Enter a guess of five letter word: allowed characters: "
+    putStrLn "Enter a guess of five letter word: " 
+    --putStrLn allowed_chars
     inp <- getGuess 5 allowed_chars
     let char_status = checkGuess inp word
     --putStrLn $ show char_status
@@ -75,16 +76,10 @@ go inp = do
      return ()
 
 --helper function
--- filterChars :: [Char] -> [(Char, Status)] -> [Char]
--- filterChars [] _ = []
--- filterChars x [] = x
--- filterChars (x:xs) ((a,b):ys) | x /= a = x:filterChars xs ((a,b):ys)
---                               | otherwise = filterChars xs ((a,b):ys)   
-
 filterChars :: [Char] -> String -> [Char]
 filterChars [] _ = []
 filterChars x [] = x
-filterChars (x:xs) s| x `elem`s  = filterChars xs s
+filterChars (x:xs) s| x `member`s  = filterChars xs s
                               | otherwise = x:filterChars xs s 
 
 updateAvailable :: [Char] -> [(Char, Status)] -> [Char]
@@ -94,3 +89,6 @@ updateAvailable x guess = let
     (c,d) = unzip $ filter (\(a,b) -> (b == Nowhere)) guess in 
         filterChars x c 
                               
+
+member :: Eq a=> a -> [a] -> Bool
+member x = foldr (\y rest -> (x == y) || rest) False
