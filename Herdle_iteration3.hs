@@ -37,8 +37,8 @@ getGuessDirection char g_index  word =  do
     let directions = computeCharacterDirections char g_index word 
     let before = filter ( == Before) directions 
     let after =  filter (== After) directions
-    if (length before > 0 && length after > 0)
-     || (length before > 0) 
+   
+    if ( not (null before) &&  not (null after) ) || not (null before)
         then return Before
     else if length after > 0 
         then return After
@@ -153,3 +153,8 @@ leftMarginAux acc = do
     else
         leftMarginAux (acc ++ " ")
 
+
+
+
+
+    
