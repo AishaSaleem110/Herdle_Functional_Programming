@@ -37,14 +37,20 @@ main
 
 ### A snippet from commandline to start the game
 
-D:\KentMSc\Semester2\FunctionalProgramming\Haskel\Herdle_Assessment2\herdle_functional_assessment>
 D:\KentMSc\Semester2\FunctionalProgramming\Haskel\Herdle_Assessment2\herdle_functional_assessment> ghci
+
 GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+
 Prelude> :l iteration_extension.hs
+
 [1 of 2] Compiling Base             ( Base.hs, interpreted )
+
 [2 of 2] Compiling Main             ( iteration_extension.hs, interpreted )
+
 Ok, two modules loaded.
+
 *Main> main
+
 Attempt 1
 Guess [any] or quit [q]?
 
